@@ -23,15 +23,18 @@ if __name__ == "__main__":
 
     # Table
     table: QTableWidget = window.table_devices
-    device_info = get_devices_info()
 
-    for id, state, ro_debuggable in device_info:
-        row = table.rowCount()
-        table.insertRow(row)
-        table.setItem(row, 0, QTableWidgetItem(id))
-        table.setItem(row, 1, QTableWidgetItem(state))
-        table.setItem(row, 2, QTableWidgetItem(ro_debuggable))
+    def refresh_devices():
+        device_info = get_devices_info()
+        table.setRowCount(len(device_info))
+        for i, (id, state, ro_debuggable) in enumerate(device_info):
+            table.setItem(i, 0, QTableWidgetItem(id))
+            table.setItem(i, 1, QTableWidgetItem(state))
+            table.setItem(i, 2, QTableWidgetItem(ro_debuggable))
 
+    refresh_Button: QPushButton = window.pushButton_refresh_device
+    refresh_Button.clicked.connect(refresh_devices)
+    refresh_devices()
     # Table End
 
     openApk_Button: QPushButton = window.pushButton_open_apk

@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>411</width>
+      <width>421</width>
       <height>221</height>
      </rect>
     </property>
@@ -49,7 +49,7 @@
      <rect>
       <x>10</x>
       <y>260</y>
-      <width>271</width>
+      <width>281</width>
       <height>31</height>
      </rect>
     </property>
@@ -57,7 +57,7 @@
    <widget class="QPushButton" name="pushButton_open_apk">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>300</x>
       <y>260</y>
       <width>41</width>
       <height>31</height>
@@ -70,7 +70,7 @@
    <widget class="QPushButton" name="pushButton_adb_install">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>350</x>
       <y>260</y>
       <width>81</width>
       <height>31</height>
@@ -102,7 +102,7 @@
    <widget class="QComboBox" name="comboBox_IDA_V">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>240</x>
       <y>300</y>
       <width>91</width>
       <height>31</height>
@@ -112,7 +112,7 @@
    <widget class="QPushButton" name="pushButton_dbgsrv">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>340</x>
       <y>300</y>
       <width>91</width>
       <height>31</height>
@@ -127,7 +127,7 @@
      <rect>
       <x>10</x>
       <y>360</y>
-      <width>411</width>
+      <width>421</width>
       <height>101</height>
      </rect>
     </property>
@@ -163,7 +163,7 @@
      <rect>
       <x>10</x>
       <y>500</y>
-      <width>411</width>
+      <width>421</width>
       <height>101</height>
      </rect>
     </property>
