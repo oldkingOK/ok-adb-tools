@@ -8,6 +8,13 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
 
+def open_file_dialog():
+    options = QFileDialog.Options()
+    options |= QFileDialog.ReadOnly
+    file_name, _ = QFileDialog.getOpenFileName(None, "打开Apk文件", "", "Apk Files (*.apk)", options=options)
+    if file_name:
+        print(file_name)
+
 if __name__ == "__main__":
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     import sys
@@ -15,7 +22,7 @@ if __name__ == "__main__":
     window = Window()
 
     # Table
-    table: QTableWidget = window.tableWidget
+    table: QTableWidget = window.table_devices
     device_info = get_devices_info()
 
     for id, state, ro_debuggable in device_info:
@@ -27,7 +34,8 @@ if __name__ == "__main__":
 
     # Table End
 
-    
+    openApk_Button: QPushButton = window.pushButton_open_apk
+    openApk_Button.clicked.connect(open_file_dialog)
 
     window.show()
     sys.exit(app.exec_())

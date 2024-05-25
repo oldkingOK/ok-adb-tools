@@ -14,7 +14,7 @@
    <string>ok adbtools</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QTableWidget" name="table_devices">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -44,7 +44,7 @@
      </property>
     </column>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="comboBox_open_apk">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -54,7 +54,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_open_apk">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -67,7 +67,7 @@
      <string>打开</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="pushButton_adb_install">
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -80,7 +80,7 @@
      <string>adb install</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="label_package_name">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -99,7 +99,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_2">
+   <widget class="QComboBox" name="comboBox_IDA_V">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -109,7 +109,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="pushButton_dbgsrv">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -122,7 +122,7 @@
      <string>运行 dbgsrv</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser">
+   <widget class="QTextBrowser" name="textBrowser_dbgsrv_output">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -132,7 +132,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="label_IDA_output">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -142,10 +142,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>IDA dbgsrv console</string>
+     <string>IDA dbgsrv output</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="label_jdbc_output">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -155,10 +155,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>jdbc console</string>
+     <string>jdbc output</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser_2">
+   <widget class="QTextBrowser" name="textBrowser_jdbc_output">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -168,7 +168,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="label_logcat">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -178,10 +178,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>Logcat</string>
+     <string>Logcat output</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser_3">
+   <widget class="QTextBrowser" name="textBrowser_logcat">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -191,7 +191,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="label_DeviceInfo">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -204,7 +204,7 @@
      <string>Device Info</string>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit">
+   <widget class="QPlainTextEdit" name="plainTextEdit_idapython">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -214,7 +214,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="pushButton_copy">
     <property name="geometry">
      <rect>
       <x>800</x>
@@ -227,7 +227,7 @@
      <string>复制</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="pushButton_start">
     <property name="geometry">
      <rect>
       <x>850</x>
@@ -240,7 +240,7 @@
      <string>启动</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="label_tip">
     <property name="geometry">
      <rect>
       <x>650</x>
@@ -253,7 +253,7 @@
      <string>点击启动之后，使用ida连接，再点一次启动</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser_4">
+   <widget class="QTextBrowser" name="textBrowser_log">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -263,7 +263,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="label_log">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -276,7 +276,7 @@
      <string>日志</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="pushButton_save">
     <property name="geometry">
      <rect>
       <x>850</x>
@@ -289,7 +289,7 @@
      <string>保存</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="pushButton_clear">
     <property name="geometry">
      <rect>
       <x>800</x>
