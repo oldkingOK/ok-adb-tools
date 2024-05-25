@@ -1,6 +1,7 @@
 # https://github.com/openatx/adbutils
 
 from adbutils import adb
+from time import sleep
 
 def get_devices_info():
     devices = []
@@ -29,3 +30,10 @@ def start_dbgsrv(ida_file_name: str):
             device.push(f"./dbgsrv/{ida_file_name}", f"/data/local/tmp/{ida_file_name}")
         device.shell(f"su -c chmod +x /data/local/tmp/{ida_file_name}", stream=True)
         yield device.shell(f"su -c /data/local/tmp/{ida_file_name}", stream=True)
+
+def start_debug_app(package: str, activity: str):
+    for device in adb.device_list():
+        device.shell(f"am start -D -n {package}/{activity}")
+        sleep(0.5)
+        pid = device.shell(f"pidof {package}")
+        yield device.shell(f'su -c logcat --pid {pid}', stream=True)

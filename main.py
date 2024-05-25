@@ -26,8 +26,9 @@ def on_open_apk():
         print("No file selected")
         return
 
-    global window
+    global window, package, activity, apk_selected
 
+    apk_selected = True
     package, activity = get_apk_info(file_name)
     label_package_name: QLabel = window.label_package_name
     label_package_name.setText(package)
@@ -50,6 +51,24 @@ def uninstall_apk():
         QMessageBox.warning(None, "警告", "No file selected")
         return
     adb_helper.uninstall_apk(text)
+
+
+def reading_stream(stream, textBrowser):
+    """
+    读取流并将其显示在textBrowser中
+    """
+    tmp = b""
+    while True:
+        try:
+            b = stream.read(1)
+        except Exception as e:
+            break
+        if b == b"\n":
+            textBrowser.append(tmp.decode())
+            tmp = b""
+            textBrowser.moveCursor(QTextCursor.End)
+        else:
+            tmp += b
 
 if __name__ == "__main__":
     # Set High DPI
@@ -75,6 +94,7 @@ if __name__ == "__main__":
     # Table End
 
     # Select Apk
+    apk_selected = False
     openApk_Button: QPushButton = window.pushButton_open_apk
     openApk_Button.clicked.connect(on_open_apk)
     # Select Apk End
@@ -95,30 +115,34 @@ if __name__ == "__main__":
 
     # IDA Click
     textBrowser_dbgsrv_output: QTextBrowser = window.textBrowser_dbgsrv_output
-    def reading_stream(stream):
-        tmp = b""
-        while True:
-            try:
-                b = stream.read(1)
-            except Exception as e:
-                break
-            if b == b"\n":
-                textBrowser_dbgsrv_output.append(tmp.decode())
-                tmp = b""
-                textBrowser_dbgsrv_output.moveCursor(QTextCursor.End)
-            else:
-                tmp += b
 
     pushButton_dbgsrv: QPushButton = window.pushButton_dbgsrv
     def on_click_dbgsrv():
         ida_version = comboBox_IDA_V.currentText()
         for stream in adb_helper.start_dbgsrv(ida_version + "_android_server64"):
-            thread = threading.Thread(target=reading_stream, args=(stream,))
+            thread = threading.Thread(target=reading_stream, args=(stream,textBrowser_dbgsrv_output))
             thread.daemon = True # 设置为守护线程，当主线程结束时，守护线程也会结束
             thread.start()
             
     pushButton_dbgsrv.clicked.connect(on_click_dbgsrv)
     # IDA Click End
+
+    # Startup
+    # set_remote_debugger("127.0.0.1", "", 23946); attach_process(pid)
+    textBrowser_logcat: QTextBrowser = window.textBrowser_logcat
+    def on_click_startup():
+        if not apk_selected:
+            QMessageBox.warning(None, "警告", "No apk file selected")
+            return
+        
+        for stream in adb_helper.start_debug_app(package, activity):
+            thread = threading.Thread(target=reading_stream, args=(stream,textBrowser_logcat))
+            thread.daemon = True
+            thread.start()
+
+    pushButton_start: QPushButton = window.pushButton_start
+    pushButton_start.clicked.connect(on_click_startup)
+    # Startup End
 
     window.show()
     sys.exit(app.exec_())
