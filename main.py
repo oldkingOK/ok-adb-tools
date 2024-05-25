@@ -53,7 +53,7 @@ def uninstall_apk():
     adb_helper.uninstall_apk(get_device_index(), text)
 
 
-def reading_stream(stream, textBrowser):
+def reading_stream(stream, textBrowser, encoding="utf-8"):
     """
     读取流并将其显示在textBrowser中
     """
@@ -64,9 +64,9 @@ def reading_stream(stream, textBrowser):
         except Exception as e:
             break
         if b == b"\n":
-            textBrowser.append(tmp.decode())
-            tmp = b""
+            textBrowser.append(tmp.decode(encoding))
             textBrowser.moveCursor(QTextCursor.End)
+            tmp = b""
         else:
             tmp += b
 
@@ -137,20 +137,36 @@ if __name__ == "__main__":
             QMessageBox.warning(None, "警告", "No apk file selected")
             return
         
-        for pid, stream in adb_helper.start_debug_app(get_device_index(), package, activity):
-            plainTextEdit_idapython.setPlainText(f'set_remote_debugger("127.0.0.1", "", 23946); attach_process({pid})')
-            thread = threading.Thread(target=reading_stream, args=(stream,textBrowser_logcat))
-            thread.daemon = True
-            thread.start()
+        global pid
+        pid, stream = adb_helper.start_debug_app(get_device_index(), package, activity)
+        plainTextEdit_idapython.setPlainText(f'set_remote_debugger("127.0.0.1", "", 23946); attach_process({pid})')
+        thread = threading.Thread(target=reading_stream, args=(stream,textBrowser_logcat))
+        thread.daemon = True
+        thread.start()
+
+        table.setItem(get_device_index(), 3, QTableWidgetItem(str(pid)))
 
     pushButton_start: QPushButton = window.pushButton_start
     pushButton_start.clicked.connect(on_click_startup)
     # Startup End
 
     # Continue
+    from jdbc_helper import start_jdbc
     pushButton_continue: QPushButton = window.pushButton_continue
+    textBrowser_jdbc_output: QTextBrowser = window.textBrowser_jdbc_output
     def on_click_continue():
-        print(get_device_index())
+        if not globals().get("pid"):
+            QMessageBox.warning(None, "警告", "No pid found")
+            return
+
+        stdout, stderr = start_jdbc(get_device_index(), pid)
+        thread1 = threading.Thread(target=reading_stream, args=(stdout,textBrowser_jdbc_output, "gbk"))
+        thread2 = threading.Thread(target=reading_stream, args=(stderr,textBrowser_jdbc_output, "gbk"))
+        thread1.daemon = True
+        thread2.daemon = True
+        thread1.start()
+        thread2.start()
+        
     
     pushButton_continue.clicked.connect(on_click_continue)
     # Continue End

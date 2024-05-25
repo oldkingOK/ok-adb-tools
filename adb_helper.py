@@ -34,4 +34,7 @@ def start_debug_app(device_index:int, package: str, activity: str):
     device.shell(f"am start -D -n {package}/{activity}")
     sleep(0.5)
     pid = device.shell(f"pidof {package}")
-    yield pid, device.shell(f'su -c logcat --pid {pid}', stream=True)
+    return pid, device.shell(f'su -c logcat --pid {pid}', stream=True)
+
+def forward(device_index:int, local: str, remote: str):
+    adb.device_list()[device_index].forward(local, remote)
