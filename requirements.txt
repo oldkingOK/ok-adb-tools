@@ -1,3 +1,4 @@
 adbutils
 apkutils
 PyQt5
+xml2dict

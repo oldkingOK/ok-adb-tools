@@ -1,6 +1,7 @@
 from resource.ok_ui import Ui_MainWindow
 from PyQt5.QtWidgets import *
 from adb_helper import get_devices_info
+from apk_helper import get_apk_info
 import PyQt5.QtCore as QtCore
 
 class Window(QMainWindow, Ui_MainWindow):
@@ -14,6 +15,18 @@ def open_file_dialog():
     file_name, _ = QFileDialog.getOpenFileName(None, "打开Apk文件", "", "Apk Files (*.apk)", options=options)
     if file_name:
         print(file_name)
+    else:
+        print("No file selected")
+
+    global window
+
+    package, activity = get_apk_info(file_name)
+    label_package_name: QLabel = window.label_package_name
+    label_package_name.setText(package)
+
+    comboBox_open_apk: QComboBox = window.comboBox_open_apk
+    comboBox_open_apk.addItem(file_name)
+    
 
 if __name__ == "__main__":
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
@@ -37,6 +50,7 @@ if __name__ == "__main__":
     refresh_devices()
     # Table End
 
+    # Select Apk
     openApk_Button: QPushButton = window.pushButton_open_apk
     openApk_Button.clicked.connect(open_file_dialog)
 
