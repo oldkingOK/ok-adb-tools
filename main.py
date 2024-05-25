@@ -42,7 +42,7 @@ def install_apk():
     if text == "":
         QMessageBox.warning(None, "警告", "No file selected")
         return
-    adb_helper.install_apk(text)
+    adb_helper.install_apk(get_device_index(), text)
     
 def uninstall_apk():
     label_package_name: QLabel = window.label_package_name
@@ -50,7 +50,7 @@ def uninstall_apk():
     if text == "包名":
         QMessageBox.warning(None, "警告", "No file selected")
         return
-    adb_helper.uninstall_apk(text)
+    adb_helper.uninstall_apk(get_device_index(), text)
 
 
 def reading_stream(stream, textBrowser):
@@ -79,7 +79,6 @@ if __name__ == "__main__":
 
     # Table
     table: QTableWidget = window.table_devices
-
     def refresh_devices():
         device_info = adb_helper.get_devices_info()
         table.setRowCount(len(device_info))
@@ -87,6 +86,9 @@ if __name__ == "__main__":
             table.setItem(i, 0, QTableWidgetItem(id))
             table.setItem(i, 1, QTableWidgetItem(state))
             table.setItem(i, 2, QTableWidgetItem(ro_debuggable))
+
+    def get_device_index():
+        return table.currentRow()
 
     refresh_Button: QPushButton = window.pushButton_refresh_device
     refresh_Button.clicked.connect(refresh_devices)
@@ -119,10 +121,10 @@ if __name__ == "__main__":
     pushButton_dbgsrv: QPushButton = window.pushButton_dbgsrv
     def on_click_dbgsrv():
         ida_version = comboBox_IDA_V.currentText()
-        for stream in adb_helper.start_dbgsrv(ida_version + "_android_server64"):
-            thread = threading.Thread(target=reading_stream, args=(stream,textBrowser_dbgsrv_output))
-            thread.daemon = True # 设置为守护线程，当主线程结束时，守护线程也会结束
-            thread.start()
+        stream = adb_helper.start_dbgsrv(get_device_index(), ida_version + "_android_server64")
+        thread = threading.Thread(target=reading_stream, args=(stream,textBrowser_dbgsrv_output))
+        thread.daemon = True # 设置为守护线程，当主线程结束时，守护线程也会结束
+        thread.start()
             
     pushButton_dbgsrv.clicked.connect(on_click_dbgsrv)
     # IDA Click End
@@ -135,7 +137,7 @@ if __name__ == "__main__":
             QMessageBox.warning(None, "警告", "No apk file selected")
             return
         
-        for pid, stream in adb_helper.start_debug_app(package, activity):
+        for pid, stream in adb_helper.start_debug_app(get_device_index(), package, activity):
             plainTextEdit_idapython.setPlainText(f'set_remote_debugger("127.0.0.1", "", 23946); attach_process({pid})')
             thread = threading.Thread(target=reading_stream, args=(stream,textBrowser_logcat))
             thread.daemon = True
@@ -148,7 +150,9 @@ if __name__ == "__main__":
     # Continue
     pushButton_continue: QPushButton = window.pushButton_continue
     def on_click_continue():
-        plainTextEdit_idapython.setPlainText("continue_process()")
+        print(get_device_index())
+    
+    pushButton_continue.clicked.connect(on_click_continue)
     # Continue End
 
     # Copy
