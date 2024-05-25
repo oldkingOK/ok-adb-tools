@@ -4,6 +4,7 @@ import atexit
 
 def start_jdbc(device_index, pid):
     adb_helper.forward(device_index, "tcp:8700", f"jdwp:{pid}")
+    # 这里只能使用 split(" ")，不能直接传字符串，否则会报错
     proc = Popen(f"jdb -connect com.sun.jdi.SocketAttach:hostname=127.0.0.1,port=8700".split(" "), stdout=PIPE, stdin=PIPE, stderr=PIPE, shell=True)
 
     atexit.register(lambda: proc.kill())
