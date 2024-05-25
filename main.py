@@ -9,7 +9,11 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
 
-def open_file_dialog():
+def on_open_apk():
+    """
+    当按下“打开”Apk按钮时触发
+    """
+
     options = QFileDialog.Options()
     options |= QFileDialog.ReadOnly
     file_name, _ = QFileDialog.getOpenFileName(None, "打开Apk文件", "", "Apk Files (*.apk)", options=options)
@@ -32,19 +36,20 @@ def install_apk():
     comboBox_open_apk: QComboBox = window.comboBox_open_apk
     text = comboBox_open_apk.currentText()
     if text == "":
-        print("No file selected")
+        QMessageBox.warning(None, "警告", "No file selected")
         return
     adb_helper.install_apk(text)
     
 def uninstall_apk():
     label_package_name: QLabel = window.label_package_name
     text = label_package_name.text()
-    if text == "":
-        print("No file selected")
+    if text == "包名":
+        QMessageBox.warning(None, "警告", "No file selected")
         return
     adb_helper.uninstall_apk(text)
 
 if __name__ == "__main__":
+    # Set High DPI
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     import sys
     app = QApplication(sys.argv)
@@ -68,7 +73,7 @@ if __name__ == "__main__":
 
     # Select Apk
     openApk_Button: QPushButton = window.pushButton_open_apk
-    openApk_Button.clicked.connect(open_file_dialog)
+    openApk_Button.clicked.connect(on_open_apk)
     # Select Apk End
 
     # Apk install and uninstall Apk
@@ -76,6 +81,7 @@ if __name__ == "__main__":
     pushButton_adb_install.clicked.connect(install_apk)
     pushButton_adb_uninstall: QPushButton = window.pushButton_adb_uninstall
     pushButton_adb_uninstall.clicked.connect(uninstall_apk)
+    # Apk install and uninstall Apk End
 
     window.show()
     sys.exit(app.exec_())
