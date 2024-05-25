@@ -1,8 +1,8 @@
 from resource.ok_ui import Ui_MainWindow
 from PyQt5.QtWidgets import *
-from adb_helper import get_devices_info
 from apk_helper import get_apk_info
 import PyQt5.QtCore as QtCore
+import adb_helper
 
 class Window(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -17,6 +17,7 @@ def open_file_dialog():
         print(file_name)
     else:
         print("No file selected")
+        return
 
     global window
 
@@ -26,7 +27,22 @@ def open_file_dialog():
 
     comboBox_open_apk: QComboBox = window.comboBox_open_apk
     comboBox_open_apk.addItem(file_name)
+
+def install_apk():
+    comboBox_open_apk: QComboBox = window.comboBox_open_apk
+    text = comboBox_open_apk.currentText()
+    if text == "":
+        print("No file selected")
+        return
+    adb_helper.install_apk(text)
     
+def uninstall_apk():
+    label_package_name: QLabel = window.label_package_name
+    text = label_package_name.text()
+    if text == "":
+        print("No file selected")
+        return
+    adb_helper.uninstall_apk(text)
 
 if __name__ == "__main__":
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
@@ -38,7 +54,7 @@ if __name__ == "__main__":
     table: QTableWidget = window.table_devices
 
     def refresh_devices():
-        device_info = get_devices_info()
+        device_info = adb_helper.get_devices_info()
         table.setRowCount(len(device_info))
         for i, (id, state, ro_debuggable) in enumerate(device_info):
             table.setItem(i, 0, QTableWidgetItem(id))
@@ -53,6 +69,13 @@ if __name__ == "__main__":
     # Select Apk
     openApk_Button: QPushButton = window.pushButton_open_apk
     openApk_Button.clicked.connect(open_file_dialog)
+    # Select Apk End
+
+    # Apk install and uninstall Apk
+    pushButton_adb_install: QPushButton = window.pushButton_adb_install
+    pushButton_adb_install.clicked.connect(install_apk)
+    pushButton_adb_uninstall: QPushButton = window.pushButton_adb_uninstall
+    pushButton_adb_uninstall.clicked.connect(uninstall_apk)
 
     window.show()
     sys.exit(app.exec_())
