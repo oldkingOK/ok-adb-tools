@@ -95,6 +95,9 @@ class Ui_MainWindow(object):
         self.pushButton_clear = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_clear.setGeometry(QtCore.QRect(800, 260, 41, 21))
         self.pushButton_clear.setObjectName("pushButton_clear")
+        self.pushButton_refresh_device = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_refresh_device.setGeometry(QtCore.QRect(90, 10, 41, 21))
+        self.pushButton_refresh_device.setObjectName("pushButton_refresh_device")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 914, 22))
@@ -135,6 +138,7 @@ class Ui_MainWindow(object):
         self.label_log.setText(_translate("MainWindow", "日志"))
         self.pushButton_save.setText(_translate("MainWindow", "保存"))
         self.pushButton_clear.setText(_translate("MainWindow", "清除"))
+        self.pushButton_refresh_device.setText(_translate("MainWindow", "刷新"))
         self.menuOk_Adbtools.setTitle(_translate("MainWindow", "Ok Adbtools"))
 
 
