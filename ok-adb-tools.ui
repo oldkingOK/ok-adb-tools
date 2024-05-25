@@ -246,14 +246,14 @@
    <widget class="QLabel" name="label_tip">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>160</y>
-      <width>241</width>
-      <height>21</height>
+      <x>690</x>
+      <y>170</y>
+      <width>151</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>点击启动之后，使用ida连接，再点一次启动</string>
+     <string>点击启动之后，复制代码</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_save">
@@ -306,6 +306,32 @@
     </property>
     <property name="text">
      <string>卸载apk</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_tip_2">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>190</y>
+      <width>131</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>使用ida连接，再点继续</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_continue">
+    <property name="geometry">
+     <rect>
+      <x>850</x>
+      <y>170</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>继续</string>
     </property>
    </widget>
   </widget>

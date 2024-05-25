@@ -36,4 +36,4 @@ def start_debug_app(package: str, activity: str):
         device.shell(f"am start -D -n {package}/{activity}")
         sleep(0.5)
         pid = device.shell(f"pidof {package}")
-        yield device.shell(f'su -c logcat --pid {pid}', stream=True)
+        yield pid, device.shell(f'su -c logcat --pid {pid}', stream=True)

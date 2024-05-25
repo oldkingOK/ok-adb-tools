@@ -128,14 +128,15 @@ if __name__ == "__main__":
     # IDA Click End
 
     # Startup
-    # set_remote_debugger("127.0.0.1", "", 23946); attach_process(pid)
     textBrowser_logcat: QTextBrowser = window.textBrowser_logcat
+    plainTextEdit_idapython: QPlainTextEdit = window.plainTextEdit_idapython
     def on_click_startup():
         if not apk_selected:
             QMessageBox.warning(None, "警告", "No apk file selected")
             return
         
-        for stream in adb_helper.start_debug_app(package, activity):
+        for pid, stream in adb_helper.start_debug_app(package, activity):
+            plainTextEdit_idapython.setPlainText(f'set_remote_debugger("127.0.0.1", "", 23946); attach_process({pid})')
             thread = threading.Thread(target=reading_stream, args=(stream,textBrowser_logcat))
             thread.daemon = True
             thread.start()
@@ -143,6 +144,17 @@ if __name__ == "__main__":
     pushButton_start: QPushButton = window.pushButton_start
     pushButton_start.clicked.connect(on_click_startup)
     # Startup End
+
+    # Continue
+    pushButton_continue: QPushButton = window.pushButton_continue
+    def on_click_continue():
+        plainTextEdit_idapython.setPlainText("continue_process()")
+    # Continue End
+
+    # Copy
+    pushButton_copy: QPushButton = window.pushButton_copy
+    pushButton_copy.clicked.connect(lambda: QApplication.clipboard().setText(plainTextEdit_idapython.toPlainText()))
+    # Copy End
 
     window.show()
     sys.exit(app.exec_())
