@@ -45,7 +45,7 @@ class Ui_MainWindow(object):
         self.label_package_name.setAlignment(QtCore.Qt.AlignCenter)
         self.label_package_name.setObjectName("label_package_name")
         self.comboBox_IDA_V = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox_IDA_V.setGeometry(QtCore.QRect(240, 300, 91, 31))
+        self.comboBox_IDA_V.setGeometry(QtCore.QRect(260, 300, 71, 31))
         self.comboBox_IDA_V.setObjectName("comboBox_IDA_V")
         self.pushButton_dbgsrv = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_dbgsrv.setGeometry(QtCore.QRect(340, 300, 91, 31))

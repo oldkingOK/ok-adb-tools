@@ -102,9 +102,9 @@
    <widget class="QComboBox" name="comboBox_IDA_V">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>260</x>
       <y>300</y>
-      <width>91</width>
+      <width>71</width>
       <height>31</height>
      </rect>
     </property>

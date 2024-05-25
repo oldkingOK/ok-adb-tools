@@ -1,8 +1,11 @@
 from resource.ok_ui import Ui_MainWindow
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 from apk_helper import get_apk_info
+from constants import IDA
 import PyQt5.QtCore as QtCore
 import adb_helper
+import threading
 
 class Window(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -82,6 +85,40 @@ if __name__ == "__main__":
     pushButton_adb_uninstall: QPushButton = window.pushButton_adb_uninstall
     pushButton_adb_uninstall.clicked.connect(uninstall_apk)
     # Apk install and uninstall Apk End
+
+    # IDA Version
+    comboBox_IDA_V: QComboBox = window.comboBox_IDA_V
+    comboBox_IDA_V.addItem(IDA.IDA_7_5.value)
+    comboBox_IDA_V.addItem(IDA.IDA_8_3.value)
+    comboBox_IDA_V.setCurrentIndex(1)
+    # IDA Version End
+
+    # IDA Click
+    textBrowser_dbgsrv_output: QTextBrowser = window.textBrowser_dbgsrv_output
+    def reading_stream(stream):
+        tmp = b""
+        while True:
+            try:
+                b = stream.read(1)
+            except Exception as e:
+                break
+            if b == b"\n":
+                textBrowser_dbgsrv_output.append(tmp.decode())
+                tmp = b""
+                textBrowser_dbgsrv_output.moveCursor(QTextCursor.End)
+            else:
+                tmp += b
+
+    pushButton_dbgsrv: QPushButton = window.pushButton_dbgsrv
+    def on_click_dbgsrv():
+        ida_version = comboBox_IDA_V.currentText()
+        for stream in adb_helper.start_dbgsrv(ida_version + "_android_server64"):
+            thread = threading.Thread(target=reading_stream, args=(stream,))
+            thread.daemon = True # 设置为守护线程，当主线程结束时，守护线程也会结束
+            thread.start()
+            
+    pushButton_dbgsrv.clicked.connect(on_click_dbgsrv)
+    # IDA Click End
 
     window.show()
     sys.exit(app.exec_())
