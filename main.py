@@ -179,5 +179,10 @@ if __name__ == "__main__":
     pushButton_copy.clicked.connect(lambda: QApplication.clipboard().setText(plainTextEdit_idapython.toPlainText()))
     # Copy End
 
+    # Clear Logcat
+    pushButton_clear: QPushButton = window.pushButton_clear
+    pushButton_clear.clicked.connect(lambda: textBrowser_logcat.clear())
+    # Clear Logcat End
+
     window.show()
     sys.exit(app.exec_())
