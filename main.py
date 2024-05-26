@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from apk_helper import get_apk_info
 from constants import IDA
+from datetime import datetime
 import PyQt5.QtCore as QtCore
 import adb_helper
 import threading
@@ -60,7 +61,7 @@ def reading_stream(stream, textBrowser, encoding="utf-8"):
     由于读取流的时候，换行符是\r\n, 所以需要将\r和\n替换为空
     注: 
     1. append会自动加一个换行符
-    2. 必须time.sleep(0.01), 过快添加内容会崩溃
+    2. 必须time.sleep, 过快添加内容会崩溃
     """
     tmp = b""
     while True:
@@ -74,7 +75,7 @@ def reading_stream(stream, textBrowser, encoding="utf-8"):
             # textBrowser.cursorText()
             textBrowser.append(tmp.decode(encoding))
             textBrowser.moveCursor(QTextCursor.End)
-            time.sleep(0.01)
+            time.sleep(0.001)
             tmp = b""
         elif b == b"\n":
             pass
@@ -191,6 +192,20 @@ if __name__ == "__main__":
     pushButton_clear: QPushButton = window.pushButton_clear
     pushButton_clear.clicked.connect(lambda: textBrowser_logcat.clear())
     # Clear Logcat End
+
+    # Save Logcat
+    pushButton_save: QPushButton = window.pushButton_save
+    def on_click_save():
+        options = QFileDialog.Options()
+        current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+        file_name, _ = QFileDialog.getSaveFileName(None, "Save Logcat", f"logcat_{current_time}.log", "Log Files (*.log)", options=options)
+        if file_name:
+            with open(file_name, "w") as f:
+                f.write(textBrowser_logcat.toPlainText())
+        else:
+            print("No file selected")
+    pushButton_save.clicked.connect(on_click_save)
+    # Save Logcat End
 
     window.show()
     sys.exit(app.exec_())
