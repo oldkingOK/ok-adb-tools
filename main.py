@@ -191,6 +191,8 @@ if __name__ == "__main__":
     # Copy
     pushButton_copy: QPushButton = window.pushButton_copy
     pushButton_copy.clicked.connect(lambda: QApplication.clipboard().setText(plainTextEdit_idapython.toPlainText()))
+    pushButton_copy_logcat: QPushButton = window.pushButton_copy_logcat
+    pushButton_copy_logcat.clicked.connect(lambda: QApplication.clipboard().setText(textBrowser_logcat.toPlainText()))
     # Copy End
 
     # Clear Logcat

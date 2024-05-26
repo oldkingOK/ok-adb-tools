@@ -272,7 +272,7 @@
    <widget class="QPushButton" name="pushButton_clear">
     <property name="geometry">
      <rect>
-      <x>800</x>
+      <x>750</x>
       <y>260</y>
       <width>41</width>
       <height>21</height>
@@ -337,7 +337,7 @@
    <widget class="QCheckBox" name="checkBox_auto_clear">
     <property name="geometry">
      <rect>
-      <x>720</x>
+      <x>670</x>
       <y>260</y>
       <width>71</width>
       <height>16</height>
@@ -348,6 +348,19 @@
     </property>
     <property name="checked">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_copy_logcat">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>260</y>
+      <width>41</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>复制</string>
     </property>
    </widget>
   </widget>
