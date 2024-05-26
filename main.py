@@ -56,6 +56,7 @@ def uninstall_apk():
 def reading_stream(stream, textBrowser, encoding="utf-8"):
     """
     读取流并将其显示在textBrowser中
+    由于读取流的时候，换行符是\r\n, 所以需要将\r和\n替换为空
     """
     tmp = b""
     while True:
@@ -63,10 +64,12 @@ def reading_stream(stream, textBrowser, encoding="utf-8"):
             b = stream.read(1)
         except Exception as e:
             break
-        if b == b"\n":
+        if b == b"\r":
             textBrowser.append(tmp.decode(encoding))
             textBrowser.moveCursor(QTextCursor.End)
             tmp = b""
+        elif b == b"\n":
+            pass
         else:
             tmp += b
 
