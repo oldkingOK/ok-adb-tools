@@ -102,6 +102,10 @@ class Ui_MainWindow(object):
         self.pushButton_continue = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_continue.setGeometry(QtCore.QRect(850, 170, 41, 31))
         self.pushButton_continue.setObjectName("pushButton_continue")
+        self.checkBox_auto_clear = QtWidgets.QCheckBox(self.centralwidget)
+        self.checkBox_auto_clear.setGeometry(QtCore.QRect(720, 260, 71, 16))
+        self.checkBox_auto_clear.setChecked(True)
+        self.checkBox_auto_clear.setObjectName("checkBox_auto_clear")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 910, 22))
@@ -145,6 +149,7 @@ class Ui_MainWindow(object):
         self.pushButton_adb_uninstall.setText(_translate("MainWindow", "卸载apk"))
         self.label_tip_2.setText(_translate("MainWindow", "使用ida连接，再点继续"))
         self.pushButton_continue.setText(_translate("MainWindow", "继续"))
+        self.checkBox_auto_clear.setText(_translate("MainWindow", "自动清除"))
         self.menuOk_Adbtools.setTitle(_translate("MainWindow", "Ok Adbtools"))
 
 
