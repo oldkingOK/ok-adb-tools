@@ -144,10 +144,15 @@ if __name__ == "__main__":
     # Startup
     textBrowser_logcat: QTextBrowser = window.textBrowser_logcat
     plainTextEdit_idapython: QPlainTextEdit = window.plainTextEdit_idapython
+    checkBox_auto_clear: QCheckBox = window.checkBox_auto_clear
+
     def on_click_startup():
         if not apk_selected:
             QMessageBox.warning(None, "警告", "No apk file selected")
             return
+        
+        if checkBox_auto_clear.isChecked():
+            textBrowser_logcat.clear()
         
         global pid
         pid, stream = adb_helper.start_debug_app(get_device_index(), package, activity)
