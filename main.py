@@ -75,7 +75,7 @@ def reading_stream(stream, textBrowser, encoding="utf-8"):
             # textBrowser.cursorText()
             textBrowser.append(tmp.decode(encoding))
             textBrowser.moveCursor(QTextCursor.End)
-            time.sleep(0.001)
+            time.sleep(0.01)
             tmp = b""
         elif b == b"\n":
             pass
