@@ -127,7 +127,7 @@
      <rect>
       <x>10</x>
       <y>280</y>
-      <width>421</width>
+      <width>271</width>
       <height>151</height>
      </rect>
     </property>
@@ -163,7 +163,7 @@
      <rect>
       <x>10</x>
       <y>460</y>
-      <width>421</width>
+      <width>271</width>
       <height>141</height>
      </rect>
     </property>
@@ -171,7 +171,7 @@
    <widget class="QLabel" name="label_logcat">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>290</x>
       <y>260</y>
       <width>131</width>
       <height>16</height>
@@ -184,9 +184,9 @@
    <widget class="QTextBrowser" name="textBrowser_logcat">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>290</x>
       <y>280</y>
-      <width>441</width>
+      <width>601</width>
       <height>321</height>
      </rect>
     </property>
