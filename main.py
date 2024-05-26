@@ -6,6 +6,7 @@ from constants import IDA
 import PyQt5.QtCore as QtCore
 import adb_helper
 import threading
+import time
 
 class Window(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -57,16 +58,23 @@ def reading_stream(stream, textBrowser, encoding="utf-8"):
     """
     读取流并将其显示在textBrowser中
     由于读取流的时候，换行符是\r\n, 所以需要将\r和\n替换为空
+    注: 
+    1. append会自动加一个换行符
+    2. 必须time.sleep(0.01), 过快添加内容会崩溃
     """
     tmp = b""
     while True:
         try:
             b = stream.read(1)
+            if b == b"": continue
         except Exception as e:
             break
         if b == b"\r":
+            # textBrowser_logcat.textCursor().insertText(tmp.decode(encoding))
+            # textBrowser.cursorText()
             textBrowser.append(tmp.decode(encoding))
             textBrowser.moveCursor(QTextCursor.End)
+            time.sleep(0.01)
             tmp = b""
         elif b == b"\n":
             pass
