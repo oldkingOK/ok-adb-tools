@@ -214,5 +214,6 @@ if __name__ == "__main__":
     pushButton_save.clicked.connect(on_click_save)
     # Save Logcat End
 
+    window.setWindowIcon(QIcon("./resource/ico.ico"))
     window.show()
     sys.exit(app.exec_())
